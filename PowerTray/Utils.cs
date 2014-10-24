@@ -23,7 +23,7 @@ namespace PowerTray
         public static extern UInt32 PowerGetActiveScheme
         (
             IntPtr UserRootPowerKey, 
-            ref IntPtr ActivePolicyGuid
+            IntPtr ActivePolicyGuid
         );
 
         [DllImport("powrprof.dll")]
