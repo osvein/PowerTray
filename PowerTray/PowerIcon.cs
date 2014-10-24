@@ -45,7 +45,10 @@ namespace PowerTray
         {
             menu.Items.Clear();
 
-            //TODO: Get active scheme
+            // Get the active scheme
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)));
+            Utils.PowerGetActiveScheme(IntPtr.Zero, ptr);
+            Guid active = (Guid)Marshal.PtrToStructure((IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr)), typeof(Guid));
 
             // Enumerate schemes
             uint bufferLength = 16;
@@ -66,6 +69,7 @@ namespace PowerTray
                 //ToolStripMenuItem item = new ToolStripMenuItem(Encoding.Unicode.GetString(nameBuffer));
                 ToolStripMenuItem item = new ToolStripMenuItem(id.ToString());
                 item.Click += new EventHandler(Scheme_Click);
+                item.Checked = id.Equals(active); // mark if active
                 
                 /*
                  * (scheme index -> shortcut key) map
